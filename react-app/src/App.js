@@ -1,12 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 import Calendar from './components/Calendar';
+import { Box } from '@mui/material'
 
 function App() {
   return (
     <div className="App">
-      <h1>yes helo varaus yes</h1>
-      <Calendar></Calendar>
+      <Box sx={{
+        padding: '10%'
+      }}>
+        <Calendar></Calendar>
+      </Box>
     </div>
   );
 }
