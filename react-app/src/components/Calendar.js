@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import { Scheduler } from "@aldabil/react-scheduler";
 
@@ -29,6 +30,11 @@ export default function Calendar(){
                 navigation: true,
             }}
             disableViewNavigator={true}
+            getRemoteEvents={fetchRemote}
+            onConfirm={handleConfirm}
+            onDelete={handleDelete}
         />
     );
 }
+
+*/

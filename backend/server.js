@@ -24,15 +24,24 @@ app.listen(PORT, ()=>{
 })
 
 app.get("/", function (req, res) {
-    res.send("yes")
+    res.send("valid JSON")
 });
 
+app.get("/reservations", async function (req, res) {
+    const data = await Reservation.find()
+    res.send(data)
+});
+
+
+// saving new reservation
 let reserve1 = new Reservation({event_id: 2, title: 'koppi2', start: Date.now(), end: Date.now()});
 
-reserve1.save()
-.then(function (Reservation){
-    console.log(Reservation.title + " reserved.");
-})
-.catch(function (err){
-    console.log(err);
-})
+function saveReservation(){
+    reserve1.save()
+    .then(function (Reservation){
+        console.log(Reservation.title + " reserved.");
+    })
+    .catch(function (err){
+        console.log(err);
+    })
+};
