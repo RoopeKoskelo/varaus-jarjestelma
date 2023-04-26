@@ -1,21 +1,29 @@
 import React from 'react';
 import { Box } from '@mui/material'
+import { useState, useEffect } from 'react';
 import {
   EventActions,
   ProcessedEvent,
   ViewEvent
 } from "@aldabil/react-scheduler/types";
 import { Scheduler } from '@aldabil/react-scheduler';
+//import { EVENTS } from './events';
 
 export default function App() {
-
   const fetchRemote = async (query: ViewEvent): Promise<ProcessedEvent[]> => {
+
+  let EVENTS: ProcessedEvent[] = [await fetch("http://localhost:5000/reservations").then((res) => res.json())]
+
     console.log({ query });
     /**Simulate fetchin remote data */
-    fetch("http://localhost:5000/reservations")
-    .then((res) => res.json())
+    //await fetch("http://localhost:5000/reservations")
+    //.then((res) => res.json())
+    //.then((res) => EVENTS)
+    console.log(EVENTS)
+  
     return new Promise((res) => {
       setTimeout(() => {
+        res(EVENTS);
       }, 3000);
     });
   };
@@ -40,21 +48,11 @@ export default function App() {
         /** PUT event to remote DB */
       } else if (action === "create") {
         /**POST event to remote DB */
-      }
-
-      const isFail = Math.random() > 0.6;
-      // Make it slow just for testing
-      setTimeout(() => {
-        if (isFail) {
-          rej("Ops... Faild");
-        } else {
-          res({
-            ...event,
-            event_id: event.event_id || Math.random()
-          });
-        }
-      }, 3000);
+      } 
+      
+      res({...event, event_id: event.event_id || Math.random()});     
     });
+    
   };
 
   const handleDelete = async (deletedId: string): Promise<string> => {
@@ -73,14 +71,7 @@ export default function App() {
       }}>
         <Scheduler
             view="week"
-            events={[
-                {
-                event_id: 1,
-                title: "Event 1",
-                start: new Date("2023/4/17 09:30"),
-                end: new Date("2023/4/17 10:30"),
-                },
-            ]}
+
             week={{ 
                 weekDays: [0, 1, 2, 3, 4], 
                 weekStartOn: 1, 
