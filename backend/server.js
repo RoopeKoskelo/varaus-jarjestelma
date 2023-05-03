@@ -28,13 +28,13 @@ app.get("/", function (req, res) {
 });
 
 app.get("/reservations", async function (req, res) {
-    const data = await Reservation.find()
+    const data = await Reservation.find({},{_id:0,})
     res.send(data)
 });
 
 
 // saving new reservation
-let reserve1 = new Reservation({event_id: 2, title: 'koppi2', start: Date.now(), end: Date.now()});
+let reserve1 = new Reservation({event_id: 1, title: 'koppi1', start: new Date(Date.now()), end: new Date(Date.now())});
 
 function saveReservation(){
     reserve1.save()
@@ -45,3 +45,4 @@ function saveReservation(){
         console.log(err);
     })
 };
+saveReservation();

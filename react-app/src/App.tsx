@@ -12,7 +12,7 @@ import { Scheduler } from '@aldabil/react-scheduler';
 export default function App() {
   const fetchRemote = async (query: ViewEvent): Promise<ProcessedEvent[]> => {
 
-  let EVENTS: ProcessedEvent[] = [await fetch("http://localhost:5000/reservations").then((res) => res.json())]
+  const EVENTS: ProcessedEvent[] = await fetch("http://localhost:5000/reservations").then((res) => res.json())
 
     console.log({ query });
     /**Simulate fetchin remote data */
