@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const reservationSchema = new Schema({
-    event_id: Number,
+    event_id: String,
     title: String,
     start: Date,
     end: Date,

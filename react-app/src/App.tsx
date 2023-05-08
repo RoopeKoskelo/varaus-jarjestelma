@@ -10,9 +10,22 @@ import { Scheduler } from '@aldabil/react-scheduler';
 //import { EVENTS } from './events';
 
 export default function App() {
-  const fetchRemote = async (query: ViewEvent): Promise<ProcessedEvent[]> => {
 
-  const EVENTS: ProcessedEvent[] = await fetch("http://localhost:5000/reservations").then((res) => res.json())
+  const fetchRemote = async (query: ViewEvent): Promise<ProcessedEvent[]> => {
+    async function fetchReservations(){
+      const data = await fetch("http://localhost:5000/reservations").then((res) => res.json())
+      
+      const newDates = data.map((data: any) => ({
+        event_id: data.event_id,
+        title: data.title,
+        start: new Date(data.start),
+        end: new Date(data.end)
+      }))
+      
+      return newDates
+    }
+
+    const EVENTS: ProcessedEvent[] = await fetchReservations()
 
     console.log({ query });
     /**Simulate fetchin remote data */
@@ -24,7 +37,7 @@ export default function App() {
     return new Promise((res) => {
       setTimeout(() => {
         res(EVENTS);
-      }, 3000);
+      }, 1000);
     });
   };
 
@@ -43,14 +56,36 @@ export default function App() {
      * ....extra other fields depend on your custom fields/editor properties
      */
     // Simulate http request: return added/edited event
+    const data = ({
+      event_id: 'burunyuu', // muuttuu heti backendissä joten mikä tahansa value käy
+      title: event.title,
+      start: event.start,
+      end: event.end
+    })
+    console.log(data)
     return new Promise((res, rej) => {
       if (action === "edit") {
         /** PUT event to remote DB */
+        fetch("http://localhost:5000/reservations", {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        console.log(event.event_id)
+        
       } else if (action === "create") {
         /**POST event to remote DB */
+        fetch("http://localhost:5000/reservations", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
       } 
-      
-      res({...event, event_id: event.event_id || Math.random()});     
+      res({...event, event_id: event.event_id || Math.random(),
+        title: event.title,
+        start: event.start,
+        end: event.end
+      });     
     });
     
   };
