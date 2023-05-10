@@ -61,9 +61,9 @@ app.post("/reservations", async function (req, res) {
 
 function updateReservation(data){
     let reserve = Reservation(data);
-    reserve.save()
+    Reservation.updateOne({title: reserve.title}, reserve)
     .then(function (Reservation){
-        console.log(Reservation.title + " reserved.");
+        console.log(Reservation.title + " updated.");
     })
     .catch(function (err){
         console.log(err);
@@ -72,7 +72,6 @@ function updateReservation(data){
 
 app.put("/reservations", async function (req, res) {
     let data = req.body;
-    data.event_id = uuidv4()
     console.log('data received: ' + JSON.stringify(data))
     updateReservation(data);
 })
