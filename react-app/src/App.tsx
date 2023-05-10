@@ -56,7 +56,7 @@ export default function App() {
      * ....extra other fields depend on your custom fields/editor properties
      */
     // Simulate http request: return added/edited event
-    const data = ({
+    let data = ({
       event_id: 'burunyuu', // muuttuu heti backendissä joten mikä tahansa value käy
       title: event.title,
       start: event.start,
