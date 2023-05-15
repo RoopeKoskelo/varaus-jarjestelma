@@ -60,7 +60,7 @@ app.post("/reservations", async function (req, res) {
 /* update existing reservation */
 
 function updateReservation(data){
-    Reservation.updateOne({title: data.title}, data)
+    Reservation.updateOne({event_id: data.event_id}, data)
     .then(function (Reservation){
         console.log(Reservation.title + " updated.");
     })
