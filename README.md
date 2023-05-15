@@ -12,3 +12,4 @@ Koodia en ole suoraan kopioinut mihinkään, paitsi komponentin valmiit osat.
 
 Backendi on node.js pohjainen, kirjastoja on express, cors, mongoose, uuidv4, dotenv ja bodyparser.
 
+Tietokantana toimii MongoDB.
