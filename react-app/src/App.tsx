@@ -57,7 +57,7 @@ export default function App() {
      */
     // Simulate http request: return added/edited event
     let data = ({
-      event_id: 'burunyuu', // muuttuu heti backendissä joten mikä tahansa value käy
+      event_id: event.event_id, // muuttuu heti backendissä joten ei merkitse mitään, mutta scheduleri vaatii jotain siihen
       title: event.title,
       start: event.start,
       end: event.end
@@ -92,10 +92,15 @@ export default function App() {
 
   const handleDelete = async (deletedId: string): Promise<string> => {
     // Simulate http request: return the deleted id
+    await fetch('http://localhost:5000/reservations/' + deletedId, { method: 'DELETE' })
+    .then((res) => res.json())
+
+    console.log(deletedId)
+
     return new Promise((res, rej) => {
       setTimeout(() => {
         res(deletedId);
-      }, 3000);
+      }, 1000);
     });
   };
   
@@ -121,6 +126,7 @@ export default function App() {
                 step: 30,
                 navigation: true,
             }}
+            hourFormat={"24"}
             disableViewNavigator={true}
             getRemoteEvents={fetchRemote}
             onConfirm={handleConfirm}

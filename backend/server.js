@@ -60,8 +60,7 @@ app.post("/reservations", async function (req, res) {
 /* update existing reservation */
 
 function updateReservation(data){
-    let reserve = Reservation(data);
-    Reservation.updateOne({title: reserve.title}, reserve)
+    Reservation.updateOne({title: data.title}, data)
     .then(function (Reservation){
         console.log(Reservation.title + " updated.");
     })
@@ -74,6 +73,26 @@ app.put("/reservations", async function (req, res) {
     let data = req.body;
     console.log('data received: ' + JSON.stringify(data))
     updateReservation(data);
+})
+
+/* delete existing reservation */
+function deleteReservation(id){
+    const idtext = id
+    Reservation.deleteOne({event_id: id})
+    .then(function (idtext){
+        console.log(
+            JSON.stringify(id) + " deleted.");
+    })
+    .catch(function (err){
+        console.log(err);
+    })
+};
+
+app.delete("/reservations/:id", async function(req, res) {
+    const id = req.url.split('/')[2];
+    console.log(id + " received.");
+    deleteReservation(id)
+    res.send({message: id + " deleted."})
 })
 /*
 let reserve1 = new Reservation({event_id: 1, title: 'koppi1', start: new Date(Date.now()), end: new Date(Date.now())});
